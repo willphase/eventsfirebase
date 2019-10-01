@@ -24,6 +24,29 @@ form {
   margin-top: 60px;
 }
 
+.formimage {
+  width: 300px;
+}
+
+.formimage img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.image-list {
+  width: 150px;
+  padding-right: 20px;
+}
+
+.imagelist img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.content-eventlist {
+  overflow: hidden;
+}
+
 form button,
 form h5 {
   margin: 20px 0;

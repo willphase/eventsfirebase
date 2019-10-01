@@ -2,11 +2,16 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { createEvent } from "../../store/actions/eventActions";
 import { Redirect } from "react-router-dom";
+import FileUploader from "react-firebase-file-uploader";
+import firebase from "firebase";
 
 class CreateEvent extends Component {
   state = {
     title: "",
-    content: ""
+    content: "",
+    image: "",
+    imageURL: "",
+    progress: 0
   };
   handleChange = e => {
     this.setState({
@@ -19,7 +24,30 @@ class CreateEvent extends Component {
     this.props.createEvent(this.state);
     this.props.history.push("/");
   };
+  handleUploadStart = () => {
+    this.setState({
+      progress: 0
+    });
+  };
+  handleUploadSuccess = filename => {
+    this.setState({
+      image: filename,
+      progress: 100
+    });
+    firebase
+      .storage()
+      .ref("images")
+      .child(filename)
+      .getDownloadURL()
+      .then(url =>
+        this.setState({
+          imageURL: url
+        })
+      );
+  };
+
   render() {
+    console.log(this.state);
     const { auth } = this.props;
     if (!auth.uid) return <Redirect to="/signin" />;
     return (
@@ -37,6 +65,21 @@ class CreateEvent extends Component {
               className="materialize-textarea"
               onChange={this.handleChange}
             />
+          </div>
+          <div>
+            <FileUploader
+              accept="image/*"
+              name="image"
+              storageRef={firebase.storage().ref("images")}
+              onUploadStart={this.handleUploadStart}
+              onUploadSuccess={this.handleUploadSuccess}
+            />
+          </div>
+          <div className="formimage">
+            <label htmlFor="image">Image</label>
+            {this.state.image && (
+              <img alt={this.state.image} src={this.state.imageURL} />
+            )}
           </div>
           <div className="input-field">
             <button className="btn pink ligten-1 z-depth-0">Create</button>
