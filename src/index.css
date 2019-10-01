@@ -33,18 +33,53 @@ form {
   max-width: 100%;
 }
 
-.image-list {
-  width: 150px;
+.content-eventlistimage img {
+  max-width: 150px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
+  float: left;
   padding-right: 20px;
 }
 
-.imagelist img {
-  max-height: 100%;
-  max-width: 100%;
+.trythis {
+  height: auto;
+  overflow: auto;
+}
+
+.content-eventlist img {
+  max-width: 150px;
+  max-height: 150px;
+  width: auto;
+  height: auto;
+  float: left;
+  padding-right: 20px;
+  overflow: auto;
 }
 
 .content-eventlist {
-  overflow: hidden;
+  height: auto;
+  overflow: auto;
+}
+
+.event-details {
+  height: auto;
+  overflow: auto;
+}
+
+.content-eventdetails {
+  height: auto;
+  overflow: auto;
+}
+
+.event-details img {
+  display: block;
+  max-width: 300px;
+  max-height: 300px;
+  float: left;
+  width: auto;
+  height: auto;
+  padding-right: 20px;
 }
 
 form button,

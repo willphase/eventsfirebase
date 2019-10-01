@@ -12,15 +12,20 @@ function EventDetails(props) {
     return (
       <div className="container section event-details">
         <div className="card z-depth-0">
-          <div className="card-content">
-            <span className="card-title">{event.title}</span>
-            <p>{event.content}</p>
-          </div>
-          <div className="card-action grey lighten-4 grey-text">
+          <div className="card-content content-eventdetails">
             <div>
-              Posted by {event.authorFirstName} {event.authorLastName}
+              <img alt={event.image} src={event.imageURL} />
             </div>
-            <div>{moment(event.createdAt.toDate()).calendar()}</div>
+            <div>
+              <span className="card-title">{event.title}</span>
+              <p>{event.content}</p>
+              <div className="grey lighten-4 grey-text">
+                <div>
+                  Posted by {event.authorFirstName} {event.authorLastName}
+                </div>
+                <div>{moment(event.createdAt.toDate()).calendar()}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
