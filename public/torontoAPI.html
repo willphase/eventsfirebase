@@ -1,0 +1,18 @@
+// Get the dataset metadata by passing package_id to the package_search endpoint
+// For example, to retrieve the metadata for this dataset:
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" language="javascript">
+    var package = {};
+    $.ajax({
+      dataType: "json",
+      type: "GET",
+      url:
+        "https://ckan0.cf.opendata.inter.prod-toronto.ca/api/3/action/package_show",
+      data: { id: "9201059e-43ed-4369-885e-0b867652feac" }
+    }).done(function(response) {
+      package = response;
+      console.log(response);
+    });
+  </script>
+</head>

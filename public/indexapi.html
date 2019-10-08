@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+    <script src="https://unpkg.com/react@15/dist/react.js"></script>
+    <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.js?features=fetch"></script>
+    <meta charset="utf-8" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway"
+      rel="stylesheet"
+    />
+    <link href="/styles.css" rel="stylesheet" />
+    <title>Events and Places App</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <h1 class="title">Events and Places</h1>
+    <div id="homepage">
+      <h1>Find an event in your area!</h1>
+      <div id="torontoevents"></div>
+    </div>
+    <!--
+    onError={e => {
+      e.target.onerror === undefined;
+      e.target.src = "https://via.placeholder.com/150";
+    }}
+"https://secure.toronto.ca" +
+                          torontoevent.calEvent.thumbImage.url
+    
+-->
+    <!-- Create React Component -->
+    <script type="text/babel">
+      var Torontoevents = React.createClass({
+        getInitialState: function() {
+          return {
+            torontoevents: [],
+            result: "toronto"
+          };
+        },
+        render: function() {
+          var torontoevents = this.state.torontoevents;
+          var beginimage = "https://secure.toronto.ca/";
+          console.log(torontoevents);
+          torontoevents = torontoevents.map(function(torontoevent, index) {
+            //console.log({this.calEvent.thumbImage.url})
+            /* if ({torontoevent.calEvent.thumbImage.url} === undefined) {
+                {torontoevent.calEvent.thumbImage.url} = "https://via.placeholder.com/150";
+              } */
+
+            return (
+              <li key={index}>
+                <div id="image">
+                  <img
+                    src={
+                      torontoevent.calEvent.thumbImage.url === "missing"
+                        ? "https://via.placeholder.com/150"
+                        : "https://secure.toronto.ca" +
+                          torontoevent.calEvent.thumbImage.url
+                    }
+                  />
+                </div>
+                <div id="text-content">
+                  <span className="name">
+                    {torontoevent.calEvent.eventName}
+                  </span>
+                  <span className="desc">
+                    {torontoevent.calEvent.shortDescription}
+                  </span>
+                  <span className="desc">
+                    <p>
+                      Date:{" "}
+                      {torontoevent.calEvent.startDate.substring(
+                        0,
+                        torontoevent.calEvent.startDate.indexOf("T")
+                      )}{" "}
+                      to{" "}
+                      {torontoevent.calEvent.endDate.substring(
+                        0,
+                        torontoevent.calEvent.endDate.indexOf("T")
+                      )}
+                    </p>
+                  </span>
+                  <span className="desc">
+                    <a
+                      href={
+                        "https://maps.google.com/?q=" +
+                        torontoevent.calEvent.locations["0"].locationName
+                      }
+                      target="_blank"
+                    >
+                      {torontoevent.calEvent.locations["0"].locationName}
+                    </a>
+                  </span>
+                </div>
+              </li>
+            );
+          });
+          return (
+            <div id="location-container">
+              <form id="search" onSubmit={this.handleSubmit}>
+                <label>Enter your city:</label>
+                <select onClick={this.handleSelectChange}>
+                  <option value="toronto">Toronto</option>
+                  <option value="ottawa">Ottawa</option>
+                </select>
+                <input type="submit" value="Find Events" />
+              </form>
+              <ul>{torontoevents}</ul>
+            </div>
+          );
+        },
+        handleSelectChange: function(e) {
+          this.setState({
+            result: e.target.value
+          });
+        },
+        handleSubmit: function(e) {
+          e.preventDefault();
+          var lng = "test";
+          var lat = "test2";
+          var result = this.state.result;
+          var torontoevents = this.state.torontoevents;
+
+          if (result === "toronto") {
+            var lng = -79.42;
+            var lat = 43.66;
+          } else if (result === "ottawa") {
+            var lng = -75.63;
+            var lat = 45.31;
+          }
+          /*
+                fetch("/sample-api-to.json")
+                  .then(res => res.json())
+                  .then(data => {
+                    this.setState({
+                      torontoevents: data
+                    });
+                    console.log(torontoevents);
+                  });
+      */
+          /*
+                      fetch("/sample-api-to.json")
+                        .then(res => res.json())
+                        .then(data => console.log(data));
+            */
+          fetch("/api/torontoevents")
+            .then(function(data) {
+              return data.json();
+            })
+            .then(json => {
+              this.setState({
+                torontoevents: json
+              });
+            });
+        }
+      });
+
+      ReactDOM.render(
+        <Torontoevents />,
+        document.getElementById("torontoevents")
+      );
+    </script>
+  </body>
+</html>

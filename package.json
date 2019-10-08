@@ -8,13 +8,16 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-firebase-file-uploader": "^2.4.2",
+    "react-img-fallback": "^1.0.1",
     "react-redux": "^5.1.1",
     "react-redux-firebase": "^2.4.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
+    "recompose": "^0.30.0",
     "redux": "^4.0.4",
     "redux-firestore": "^0.9.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "urllib": "^2.34.1"
   },
   "scripts": {
     "start": "react-scripts start",
