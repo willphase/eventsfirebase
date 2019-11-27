@@ -21,10 +21,13 @@ class DataEvents extends Component {
       hits: []
     };
   }
+
   componentDidMount() {
-    fetch(API)
+    fetch(
+      "https://cors-anywhere.herokuapp.com/https://ckan0.cf.opendata.inter.prod-toronto.ca/dataset/9201059e-43ed-4369-885e-0b867652feac/resource/8900fdb2-7f6c-4f50-8581-b463311ff05d/download/festivals-and-events-json-feed.json"
+    )
       .then(response => response.json())
-      .then(data => this.setState({ hits: data }));
+      .then(data => this.setState({ hits: data.map(item => item.calEvent) }));
     console.log(this.state);
   }
   render() {
@@ -35,16 +38,15 @@ class DataEvents extends Component {
         {hits.slice(0, 90).map(hit => (
           <div className="card z-depth-0 event-summary">
             <div
-              key={hit.calEvent.recId}
+              key={hit.recId}
               className="card-content grey-text text-darken-3"
             >
               <div className="content-eventlistimage">
                 <img
-                  alt={hit.calEvent.eventName}
+                  alt={hit.eventName}
                   src={
-                    hit.calEvent.thumbImage
-                      ? "https://secure.toronto.ca" +
-                        hit.calEvent.thumbImage.url
+                    hit.thumbImage
+                      ? "https://secure.toronto.ca" + hit.thumbImage.url
                       : "https://via.placeholder.com/150"
                   }
                 />
@@ -52,15 +54,13 @@ class DataEvents extends Component {
               <div className="trythis">
                 <div className="content-eventlist">
                   <span className="card-title">
-                    <a href={hit.calEvent.eventWebsite} target="blank">
-                      {hit.calEvent.eventName}
+                    <a href={hit.eventWebsite} target="blank">
+                      {hit.eventName}
                     </a>
                   </span>
-                  <p>{hit.calEvent.description}</p>
+                  <p>{hit.description}</p>
                   <p className="grey-text">
-                    {moment(hit.calEvent.startDate).format(
-                      "dddd, MMMM Do, h:mm a"
-                    )}
+                    {moment(hit.startDate).format("dddd, MMMM Do, h:mm a")}
                   </p>
                 </div>
               </div>
